@@ -1,8 +1,21 @@
-'use strict';
+import express from 'express';
+import mongoose from 'mongoose';
 
-var express = require('express'),
-    app = express();
+const app = express();
 
+// db
+var dburl = process.env.DATABASEURL || 'mongodb://localhost/voting-app-fcc';
+
+mongoose.connect(dburl, function(err, db){
+    if(err){
+        console.error(err);
+    } else {
+        console.log('DB successfully connected');
+    }
+});
+
+//routes
+app.set('view engine', 'ejs');
 app.use(express.static('/public'));
 
 app.route('/polls')
